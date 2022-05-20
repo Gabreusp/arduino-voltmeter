@@ -1,0 +1,37 @@
+#include <LiquidCrystal_I2C.h>
+#include <Wire.h>
+
+#define     vmax   15.0                         //max voltage
+
+
+float     voltage = 0;                        //read voltage
+LiquidCrystal_I2C lcd(0x3F,16,2);
+
+// =============================================================================================================
+
+void setup()
+{
+
+ lcd.init();
+ lcd.setBacklight(HIGH);
+ 
+}
+
+// =============================================================================================================
+
+void loop()
+{
+
+    voltage = (analogRead(A1) * vmax) / 1023.0; // read and convert the analog value (0 / 1023) to (0v / 15v)
+    percent = (voltage*100)/15;                 // converts to %
+    lcd.clear(); 			        // just to avoid bugs on lcd refresh rate	 
+    lcd.setCursor(1,0);			        // set the position 1,0 (line/column)
+    lcd.print(percent);				// print charge (%) at lcd display, can be changed for "voltage" if you prefer		      
+    lcd.print("%");
+    delay(500);
+
+
+}
+
+
+
